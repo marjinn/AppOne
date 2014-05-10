@@ -365,7 +365,7 @@ int main(int argc, char * argv[])
     
     NSLog(@"createAssetGroupAndAddAsset %@",
           createAssetGroupAndAddAsset(assetReturned) ? @"YES" : @"NO");
-    	
+    
 
     
     
