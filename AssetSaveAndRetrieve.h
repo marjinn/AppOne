@@ -341,6 +341,10 @@ BOOL createAssetGroupAndAddAsset(ALAsset* asset)
                                              DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0),
                    ^(size_t currentIndex)
                    {
+                       
+                        @autoreleasepool
+                       {
+                            
                       NSLog(@"Itration # %zu",currentIndex);
                        
                        NSError* __autoreleasing error              = nil;
@@ -360,7 +364,10 @@ BOOL createAssetGroupAndAddAsset(ALAsset* asset)
                        
                        NSLog(@"createAssetGroupAndAddAsset %@",
                              createAssetGroupAndAddAsset(assetReturned) ? @"YES" : @"NO");
-                   }
+                       
+                       }//@autoreleasepool
+                   
+                   }//dispatch_apply
 }
 
     
