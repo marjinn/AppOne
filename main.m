@@ -347,6 +347,12 @@ int main(int argc, char * argv[])
     
     dmo.firstValue = [NSString stringWithFormat:@"%u", arc4random()];
     
+    
+    dispatch_apply(2, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^(size_t currentIndex)
+    {
+        
+    
+
     ///*
     NSError* __autoreleasing error              = nil;
     ALAssetsLibrary* __autoreleasing assetsLib  = nil;
@@ -366,8 +372,8 @@ int main(int argc, char * argv[])
     NSLog(@"createAssetGroupAndAddAsset %@",
           createAssetGroupAndAddAsset(assetReturned) ? @"YES" : @"NO");
     
-
-    
+    });
+   
     
     
     /*
