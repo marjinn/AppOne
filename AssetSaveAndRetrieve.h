@@ -367,6 +367,7 @@ BOOL createAssetGroupAndAddAsset(ALAsset* asset)
                        
                        }//@autoreleasepool
                    
+                   
                    }//dispatch_apply
 }
 
