@@ -333,25 +333,33 @@ BOOL createAssetGroupAndAddAsset(ALAsset* asset)
 
 
 
-(void)callerCard(void)
+(void)callerCard(size_t iterations)
 {
-    NSError* __autoreleasing error              = nil;
-    ALAssetsLibrary* __autoreleasing assetsLib  = nil;
-    ALAsset* assetReturned                      = nil;
-    
-    assetReturned =
-    writeImageToAlbumAndReturnAsset
-    (
-     [UIImage imageNamed:@"punch.jpg"],
-     (NSError *__autoreleasing *)&error,
-     (ALAssetsLibrary *__autoreleasing *)&assetsLib
-     );
-    
-    NSLog(@"assetReturned %@",assetReturned);
-    NSLog(@ "error O %@",error);
-    
-    NSLog(@"createAssetGroupAndAddAsset %@",
-          createAssetGroupAndAddAsset(assetReturned) ? @"YES" : @"NO");
+    dispatch_apply(
+                   iterations,
+                   dispatch_get_global_queue(
+                                             DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0),
+                   ^(size_t currentIndex)
+                   {
+                       
+                       NSError* __autoreleasing error              = nil;
+                       ALAssetsLibrary* __autoreleasing assetsLib  = nil;
+                       ALAsset* assetReturned                      = nil;
+                       
+                       assetReturned =
+                       writeImageToAlbumAndReturnAsset
+                       (
+                        [UIImage imageNamed:@"punch.jpg"],
+                        (NSError *__autoreleasing *)&error,
+                        (ALAssetsLibrary *__autoreleasing *)&assetsLib
+                        );
+                       
+                       NSLog(@"assetReturned %@",assetReturned);
+                       NSLog(@ "error O %@",error);
+                       
+                       NSLog(@"createAssetGroupAndAddAsset %@",
+                             createAssetGroupAndAddAsset(assetReturned) ? @"YES" : @"NO");
+                   }
 }
 
     
