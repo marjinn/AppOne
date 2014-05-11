@@ -341,6 +341,7 @@ BOOL createAssetGroupAndAddAsset(ALAsset* asset)
                                              DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0),
                    ^(size_t currentIndex)
                    {
+                      NSLog(@"Itration # %zu",currentIndex);
                        
                        NSError* __autoreleasing error              = nil;
                        ALAssetsLibrary* __autoreleasing assetsLib  = nil;

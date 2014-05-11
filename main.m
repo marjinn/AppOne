@@ -351,7 +351,7 @@ int main(int argc, char * argv[])
     dispatch_apply(2, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^(size_t currentIndex)
     {
         
-    
+     NSLog(@"Itration # %zu",currentIndex);
 
     ///*
     NSError* __autoreleasing error              = nil;
