@@ -348,37 +348,73 @@ int main(int argc, char * argv[])
     dmo.firstValue = [NSString stringWithFormat:@"%u", arc4random()];
     
     
-    dispatch_apply(2, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^(size_t currentIndex)
+    NSOperationQueue* opQ;
+    opQ = [NSOperationQueue new];
+    
+    [opQ setName:@"nEw operation Q"];
+    
+    NSBlockOperation* op;
+    op = [NSBlockOperation blockOperationWithBlock:^
     {
+        NSLog(@"[NSThread currentThread] from NSBlockOperation %@",
+              [NSThread currentThread]);
+        NSLog(@"[NSThread mainThread] from NSBlockOperation %@",
+              [NSThread mainThread]);
         
-        @autoreleasepool {
-            
-      
-        
-     NSLog(@"Itration # %zu",currentIndex);
+    }];
+    
+    [opQ addOperation:(NSOperation *)op];
+    
+    if ([op isFinished])
+    {
+        NSLog(@"[op isFinished]");
+    }
+    
+    
+    dispatch_queue_t dispatchQ = 0;
+    dispatchQ =
+    dispatch_queue_create("dispatch.Q.TrialWithOps", DISPATCH_QUEUE_CONCURRENT);
+    
+    dispatch_async(dispatchQ, ^
+    {
+        NSLog(@"[NSThread currentThread] from dispatchQ %@",
+              [NSThread currentThread]);
+        NSLog(@"[NSThread mainThread] from dispatchQ %@",
+              [NSThread mainThread]);
 
-    ///*
-    NSError* __autoreleasing error              = nil;
-    ALAssetsLibrary* __autoreleasing assetsLib  = nil;
-    ALAsset* assetReturned                      = nil;
-    
-    assetReturned =
-    writeImageToAlbumAndReturnAsset
-    (
-     [UIImage imageNamed:@"punch.jpg"],
-     (NSError *__autoreleasing *)&error,
-     (ALAssetsLibrary *__autoreleasing *)&assetsLib
-     );
-    
-    NSLog(@"assetReturned %@",assetReturned);
-    NSLog(@ "error O %@",error);
-    
-    NSLog(@"createAssetGroupAndAddAsset %@",
-          createAssetGroupAndAddAsset(assetReturned) ? @"YES" : @"NO");
-    
-            }//autoreleasePool
-            
     });
+    
+//    dispatch_apply(2, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^(size_t currentIndex)
+//    {
+//        
+//        @autoreleasepool {
+//            
+//      
+//        
+//     NSLog(@"Itration # %zu",currentIndex);
+//
+//    ///*
+//    NSError* __autoreleasing error              = nil;
+//    ALAssetsLibrary* __autoreleasing assetsLib  = nil;
+//    ALAsset* assetReturned                      = nil;
+//    
+//    assetReturned =
+//    writeImageToAlbumAndReturnAsset
+//    (
+//     [UIImage imageNamed:@"punch.jpg"],
+//     (NSError *__autoreleasing *)&error,
+//     (ALAssetsLibrary *__autoreleasing *)&assetsLib
+//     );
+//    
+//    NSLog(@"assetReturned %@",assetReturned);
+//    NSLog(@ "error O %@",error);
+//    
+//    NSLog(@"createAssetGroupAndAddAsset %@",
+//          createAssetGroupAndAddAsset(assetReturned) ? @"YES" : @"NO");
+//    
+//            }//autoreleasePool
+//            
+//    });
    
       
     
